@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <title>Sheetsee Table Demo</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
+    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js'></script>
+    <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic'>
+    <script type='text/javascript' src='../js/tabletop1.3.4.js'></script>
+    <script type='text/javascript' src='../js/sheetsee.js'></script>
+    <link rel='stylesheet' type='text/css' href='../assets/style.css'>
+  </head>
+<body class="loading">
+  <div class="container content">
+    <div id="fullTable"></div>
+    <p><em><a id="spreadsheet-link" href="" target="_blank">Speadsheet with complete entries</a></em><p>
+  </div>
+  <div class="container loading-indicator">
+    <h1>Loading lots of things …</h1>
+  </div>
+
+<script id="fullTable" type="text/html">
+  <div>
+  {{#rows}}
+    <h1>{{topicofpresentation}}</h1>
+    <p class="summary">{{summary}}</p>
+    <p class="extra">{{extra}}</p>
+    <form id="voter">
+      <input type="hidden" value="{{sheetRowNumber}}" name="sheetRowNumber">
+      <p>
+      <label><input type="radio" name="vote" value="0"><span class="rank">0</span> - <strong>Veto</strong></label>
+      <label><input type="radio" name="vote" value="1"><span class="rank">1</span> - Would <strong>avoid</strong></label>
+      <label><input type="radio" name="vote" value="2"><span class="rank">2</span> - Pretty <strong>bad</strong></label>
+      <label><input type="radio" name="vote" value="3"><span class="rank">3</span> - <strong>Confusing</strong> / Bad writing</label>
+      <label><input type="radio" name="vote" value="4"><span class="rank">4</span> - <strong>Boring</strong> / Stopped reading</label>
+      <label><input type="radio" name="vote" value="5"><span class="rank">5</span> - <strong>Meh</strong>.</label>
+      <label><input type="radio" name="vote" value="6"><span class="rank">6</span> - Would <strong>consider</strong> seeing</label>
+      <label><input type="radio" name="vote" value="7"><span class="rank">7</span> - Would <strong>want</strong> to see</label>
+      <label><input type="radio" name="vote" value="8"><span class="rank">8</span> - Would <strong>definitely</strong> see</label>
+      <label><input type="radio" name="vote" value="9"><span class="rank">9</span> - Very <strong>excited</strong> about</label>
+      <label><input type="radio" name="vote" value="10"><span class="rank">10</span> - Will <strong>fight</strong> for</label>
+      </p>
+      <p>
+        <textarea name="comment" placeholder="Remarks"></textarea>
+      </p>
+    </form>
+    <p class="note"><span>(Row {{sheetRowNumber}} in sheet)</span></p>
+  {{/rows}}
+  </div>
+</script>
+
+<script type="text/javascript">
+  (function () {
+
+    var sheetID = "ENTER THE SHEET ID HERE";
+    var spreadsheetLink = "https://docs.google.com/a/github.com/spreadsheet/ccc?key=" + sheetID;
+
+    function persistChoice (e) {
+      // need to know who is voting i.e. which columns to persist vote and remarks
+      function successCallback () {
+        $('body').css({ opacity: 1 });
+      }
+      $('body').css({ opacity: 0.5 });
+      setTimeout(successCallback, 150);
+    }
+
+    function persistRemark (e) {
+      persistChoice(e);
+    }
+
+    function showInfo(data) {
+      console.log(data)
+      data = data.map(function (proposal) {
+        proposal.summary = proposal["summarytobeusedonsiteplaintextormarkdown3-5sentences."];
+        proposal.extra = proposal["whatelseyouwanttotellusaboutthetalkoutsidethepublicsummary3-5sentences"];
+        proposal.sheetRowNumber = proposal.rowNumber + 1;
+        return proposal;
+      })
+      var tableOptions = {"data": data
+      , "pagination": 1, "tableDiv": "#fullTable", "filterDiv": "#fullTableFilter"}
+      Sheetsee.makeTable(tableOptions)
+      Sheetsee.initiateTableFilter(tableOptions)
+      $('body').removeClass('loading');
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      Tabletop.init( { key: sheetID, callback: showInfo, simpleSheet: true } )
+    })
+
+    $('.content').on('change', 'form input', persistChoice);
+    $('.content').on('blur', 'form textarea', persistRemark)
+  }());
+</script>
+
+</body>
+</html>

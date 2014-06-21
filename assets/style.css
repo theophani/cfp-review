@@ -1,0 +1,47 @@
+.container {max-width: 600px; margin: 0 auto; overflow: auto;}
+
+h3 {padding-top: 18px;}
+h1 {font-size: 1.2em;}
+
+ul, ol {text-indent: 0; margin: 0; padding-left: 20px;}
+ul li {padding-bottom: 6px; line-height: 22px;}
+
+/* older css */
+
+body {font-family: Libre Baskerville, Baskerville, Georgia, serif; font-size: 14px; background: #fff; color: #333;  border: 10px #e10079 solid; margin: 0px; padding: 20px 20px 100px 20px; }
+h1, h2, h3, h4, h5, h6 {font-family: Helvetica, Arial, sans-serif;}
+h2 {margin-top: 40px;}
+
+img {width: 100%;}
+
+p a, a {color: #333; text-decoration: none; padding-bottom: 0px; border-bottom: 2px #e10079 solid;}
+p a:visted {color: #ff00ff;}
+a:hover {color: #47CCFC;}
+a:active {color: #47CCFC;}
+/*a:visited {color: #333;}*/
+small {padding: 10px 0px;}
+p, ol {line-height: 24px;}
+
+/* funsies */
+::selection {background: #44FFB4;}
+::-moz-selection {background: #44FFB4;}
+
+/* Map Popup Style */
+.leaflet-popup-content h2 {margin-bottom: 4px; margin-top: auto;}
+
+#Pagination {border-top: 1px solid #efefef; margin: 10px 0; padding: 0.25em; display: block;}
+#Pagination a {cursor: hand; display: inline-block; padding: 0.8em;}
+.no-pag {color: #acacac; border.color: transparent;}
+.no-pag:hover {color: #acacac;}
+.photo {display: inline-block; width: 100px;}
+.summary { white-space: pre-wrap; }
+.extra { white-space: pre-wrap; color: #999 }
+.loading .content { display: none; }
+.loading-indicator { display: none; }
+.loading .loading-indicator { display: block; }
+label { display: block; cursor: pointer; line-height: 3em }
+label:hover, label:focus { background-color: yellow; }
+.rank { display: inline-block; margin: 0 .3em; width: 1em; }
+textarea { font-size: 1.2em; line-height: 1.5em; width: 100%; min-height: 3em; box-sizing: border-box; }
+.note { color: #999; }
+
