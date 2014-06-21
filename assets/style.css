@@ -1,4 +1,4 @@
-.container {max-width: 600px; margin: 0 auto; overflow: auto;}
+.container {max-width: 900px; margin: 0 auto; overflow: auto;}
 
 h3 {padding-top: 18px;}
 h1 {font-size: 1.2em;}
@@ -29,7 +29,7 @@ p, ol {line-height: 24px;}
 /* Map Popup Style */
 .leaflet-popup-content h2 {margin-bottom: 4px; margin-top: auto;}
 
-#Pagination {border-top: 1px solid #efefef; margin: 10px 0; padding: 0.25em; display: block;}
+#Pagination {border-top: 1px solid #efefef; display: block; text-align: right;}
 #Pagination a {cursor: hand; display: inline-block; padding: 0.8em;}
 .no-pag {color: #acacac; border.color: transparent;}
 .no-pag:hover {color: #acacac;}
@@ -53,7 +53,16 @@ div.column {
 label:hover, label:focus { background-color: yellow; }
 .rank { display: inline-block; margin: 0 .3em; width: 1em; padding: 0 0.25em; text-align: center; }
 textarea { font-size: 1.2em; line-height: 1.5em; width: 100%; min-height: 3em; box-sizing: border-box; }
-.note { color: #999; }
+.note { color: #999; clear: both; }
 input:checked + span { background-color: yellow; }
 
+.left-side {
+  float: left;
+  width: 580px;
+  padding-right: 20px;
+}
 
+.right-side {
+  float: left;
+  width: 300px;
+}

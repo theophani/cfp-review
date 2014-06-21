@@ -13,11 +13,13 @@
 <body class="loading">
   <div class="container content">
     <div id="fullTable"></div>
+    <div id="footer">
     <p>
       <em><a id="spreadsheet-link" href="" target="_blank">Speadsheet with complete entries</a></em>
       <em><a id="export-link" href="">Export</a></em>
     </p>
     <textarea rows="20" cols="20" style="display:none;" id="export"></textarea>
+    </div>
   </div>
   <div class="container loading-indicator">
     <h1>Loading lots of things …</h1>
@@ -26,9 +28,12 @@
 <script id="fullTable" type="text/html">
   <div>
   {{#rows}}
+  <div class="left-side">
     <h1>{{topicofpresentation}}</h1>
     <p class="summary">{{summary}}</p>
     <p class="extra">{{extra}}</p>
+  </div>
+  <div class="right-side">
     <form id="voter">
       <input type="hidden" id="sheetRowNumber" value="{{sheetRowNumber}}" name="sheetRowNumber">
       <div class="column">
@@ -55,6 +60,7 @@
         <textarea id="comment" name="comment" placeholder="Remarks"></textarea>
       </p>
     </form>
+    </div>
     <p class="note"><span>(Row {{sheetRowNumber}} in sheet)</span></p>
   {{/rows}}
   </div>
