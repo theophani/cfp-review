@@ -44,7 +44,7 @@
     $('#vote_' + vote.vote).prop("checked", true);
   }
 
-  function persistChoice (e) {
+  function persistVote (e) {
     var vote = parseVote(($('#voter').serialize()));
     var votes = loadVotes();
 
@@ -53,16 +53,12 @@
       comment: vote.comment
     };
     storeVotes(votes);
-    // need to know who is voting i.e. which columns to persist vote and remarks
+
     function successCallback () {
       $('body').css({ opacity: 1 });
     }
     $('body').css({ opacity: 0.5 });
     setTimeout(successCallback, 150);
-  }
-
-  function persistRemark (e) {
-    persistChoice(e);
   }
 
   var totalRows; // ugh global!
@@ -118,8 +114,8 @@
     return vote;
   }
 
-  $('.content').on('change', 'form input', persistChoice);
-  $('.content').on('blur', 'form textarea', persistRemark)
+  $('.content').on('change', 'form input', persistVote);
+  $('.content').on('blur', 'form textarea', persistVote)
   $('#export-link').on('click', exportData);
   $(window).on('hashchange', loadValues);
 }());
