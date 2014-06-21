@@ -40,7 +40,7 @@
     if(!vote) {
       return;
     }
-    $('#comment').val(vote.comment);
+    $('#comment').val(vote.comment.replace(/\+/g, ' '));
     $('#vote_' + vote.vote).prop("checked", true);
   }
 
