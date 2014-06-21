@@ -65,6 +65,7 @@
     exportData(e);
     if (document.querySelector('#speed_mode').checked) {
       document.querySelector('.pagination-next-fullTable').click();
+      window.scrollTo(0,0);
     }
   }
 
