@@ -63,6 +63,9 @@
     $('body').css({ opacity: 0.5 });
     setTimeout(successCallback, 150);
     exportData(e);
+    if (document.querySelector('#speed_mode').checked) {
+      document.querySelector('.pagination-next-fullTable').click();
+    }
   }
 
   var totalRows; // ugh global!
