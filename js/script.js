@@ -4,6 +4,9 @@
   var spreadsheetLink = "https://docs.google.com/a/github.com/spreadsheet/ccc?key=" + sheetID;
   var cellUrlPrefix = "https://spreadsheets.google.com/feeds/cells/"+ sheetID +"/ocw/public/basic/";
 
+  var voteColumn = 25;  // needs to be based on who is voting
+  var remarkColumn = 26;  // needs to be based on who is voting
+
   function cellAddress(row, column) {
     return 'R' + row + 'C' + column;
   }
@@ -16,28 +19,24 @@
     return entry;
   }
 
-  function persistChoice (e) {
-    $('body').css({ opacity: 0.5 });
+  function persistChoice (column) {
+    return function (e) {
+      $('body').css({ opacity: 0.5 });
+      var row = $('[name=sheetRowNumber]').val();
+      var choice = e.target.value;
+      var entry = createEntryElem(row, column, choice);
 
-    // need to know who is voting i.e. which columns to persist vote and remarks
-    var row = 2;
-    var column = 25;
-    var choice = e.target.value;
-    var entry = createEntryElem;
-
-    $.ajax({
-      type: 'PUT',
-      url: cellUrlPrefix + cellAddress(row, column),
-      contentType: 'application/atom+xml',
-      data: entry,
-      success: function () {
-        $('body').css({ opacity: 1 });
-      }
-    });
-  }
-
-  function persistRemark (e) {
-    persistChoice(e);
+      $.ajax({
+        crossDomain: true,
+        type: 'PUT',
+        url: cellUrlPrefix + cellAddress(row, column),
+        contentType: 'application/atom+xml',
+        data: entry,
+        success: function () {
+          $('body').css({ opacity: 1 });
+        }
+      });
+    }
   }
 
   function showInfo(data) {
@@ -58,6 +57,6 @@
     Tabletop.init( { key: sheetID, callback: showInfo, simpleSheet: true } )
   })
 
-  $('.content').on('change', 'form input', persistChoice);
-  $('.content').on('blur', 'form textarea', persistRemark)
+  $('.content').on('change', 'form input', persistChoice(voteColumn));
+  $('.content').on('blur', 'form textarea', persistChoice(remarkColumn));
 }());
