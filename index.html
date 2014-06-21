@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset='utf-8'>
-    <title>Sheetsee Table Demo</title>
+    <title>2014 JSConf EU Talks</title>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
     <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js'></script>
     <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic'>
@@ -30,7 +30,6 @@
     <form id="voter">
       <input type="hidden" id="sheetRowNumber" value="{{sheetRowNumber}}" name="sheetRowNumber">
       <p>
-      <label><input type="radio" name="vote" id="vote_0" value="0"><span class="rank">0</span> - <strong>Veto</strong></label>
       <label><input type="radio" name="vote" id="vote_1" value="1"><span class="rank">1</span> - Would <strong>avoid</strong></label>
       <label><input type="radio" name="vote" id="vote_2" value="2"><span class="rank">2</span> - Pretty <strong>bad</strong></label>
       <label><input type="radio" name="vote" id="vote_3" value="3"><span class="rank">3</span> - <strong>Confusing</strong> / Bad writing</label>
@@ -41,6 +40,7 @@
       <label><input type="radio" name="vote" id="vote_8" value="8"><span class="rank">8</span> - Would <strong>definitely</strong> see</label>
       <label><input type="radio" name="vote" id="vote_9" value="9"><span class="rank">9</span> - Very <strong>excited</strong> about</label>
       <label><input type="radio" name="vote" id="vote_10" value="10"><span class="rank">10</span> - Will <strong>fight</strong> for</label>
+      <label><input type="radio" name="vote" id="vote_0" value="0"><span class="rank">0</span> - <strong>Veto</strong></label>
       </p>
       <p>
         <textarea id="comment" name="comment" placeholder="Remarks"></textarea>
@@ -51,140 +51,6 @@
   </div>
 </script>
 
-<script type="text/javascript">
-  (function () {
-
-    // localStorage warppers
-    Storage.prototype.setObject = function(key, value) {
-      this.setItem(key, JSON.stringify(value));
-    };
-
-    Storage.prototype.getObject = function(key) {
-      try {
-        return JSON.parse(this.getItem(key));
-      } catch(e) {
-        return {};
-      }
-    };
-    // ---
-
-    // loading/storing votes
-    var ls_key = 'jseu-voting';
-    function loadVotes() {
-      if(!window.localStorage.getObject(ls_key)) {
-        window.localStorage.setObject(ls_key, []);
-      }
-      return window.localStorage.getObject(ls_key);
-    }
-
-    function storeVotes(votes) {
-      window.localStorage.setObject(ls_key, votes);
-    }
-    // ---
-
-    var sheetUrl = prompt("Enter Google Spreadsheet URL",
-        localStorage.getItem('sheetUrl') || '');
-    localStorage.setItem('sheetUrl', sheetUrl);
-    var sheetID = sheetUrl.match(/key=([^&]+)/)[1];
-    var spreadsheetLink = "https://docs.google.com/a/github.com/spreadsheet/ccc?key=" + sheetID;
-
-    // restore previous votes into the current vote form
-    function loadValues() {
-      var votes = loadVotes();
-      var rowNo = parseInt($('#sheetRowNumber').val(), 10);
-      // load persisted values
-      var vote = votes[rowNo];
-      if(!vote) {
-        return;
-      }
-      $('#comment').val(vote.comment);
-      $('#vote_' + vote.vote).prop("checked", true);
-    }
-
-    function persistChoice (e) {
-      var vote = parseVote(($('#voter').serialize()));
-      var votes = loadVotes();
-
-      votes[vote.sheetRowNumber] = {
-        vote: vote.vote,
-        comment: vote.comment
-      };
-      storeVotes(votes);
-      // need to know who is voting i.e. which columns to persist vote and remarks
-      function successCallback () {
-        $('body').css({ opacity: 1 });
-      }
-      $('body').css({ opacity: 0.5 });
-      setTimeout(successCallback, 150);
-      exportData(e);
-    }
-
-    function persistRemark (e) {
-      persistChoice(e);
-      exportData(e);
-    }
-
-    var totalRows; // ugh global!
-    function showInfo(data) {
-      totalRows = data.length;
-      data = data.map(function (proposal) {
-        proposal.summary = proposal["summarytobeusedonsiteplaintextormarkdown3-5sentences."];
-        proposal.extra = proposal["whatelseyouwanttotellusaboutthetalkoutsidethepublicsummary3-5sentences"];
-        proposal.sheetRowNumber = proposal.rowNumber + 1;
-        return proposal;
-      })
-      var tableOptions = {"data": data
-      , "pagination": 1, "tableDiv": "#fullTable", "filterDiv": "#fullTableFilter"}
-      Sheetsee.makeTable(tableOptions)
-      Sheetsee.initiateTableFilter(tableOptions)
-      loadValues();
-      $('body').removeClass('loading');
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-      Tabletop.init( { key: sheetID, callback: showInfo, simpleSheet: true } )
-    })
-
-    // localStorage to csv
-    function exportData(e) {
-      e.preventDefault();
-      var votes = loadVotes();
-      var csv = '';
-      for(var idx = 0; idx < totalRows; idx++) {
-        var vote = votes[idx];
-        if(vote) {
-          csv += vote.vote + ',' + vote.comment + '\n';
-        } else {
-          csv += '\n';
-        }
-      }
-      // Poor person's history.
-      console.log(csv.trim());
-      $('#export').val(csv).show();
-    }
-
-    // helper
-    function parseVote(s) {
-      var vote = {};
-      var kvs = s.split('&');
-      kvs.forEach(function(kv) {
-        var k_v = kv.split('=');
-        var key = k_v[0];
-        var value = k_v[1];
-        if(key != 'comment') {
-          value = parseInt(value, 10);
-        }
-        vote[k_v[0]] = value;
-      });
-      return vote;
-    }
-
-    $('.content').on('change', 'form input', persistChoice);
-    $('.content').on('blur', 'form textarea', persistRemark)
-    $('#export-link').on('click', exportData);
-    $(window).on('hashchange', loadValues);
-  }());
-</script>
-
+<script type='text/javascript' src='./js/script.js'></script>
 </body>
 </html>
