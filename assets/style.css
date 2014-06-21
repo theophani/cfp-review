@@ -39,7 +39,9 @@ p, ol {line-height: 24px;}
 .loading .content { display: none; }
 .loading-indicator { display: none; }
 .loading .loading-indicator { display: block; }
-label {
+label { display: block; cursor: pointer; line-height: 3em; }
+
+div.column {
   display: inline-block;
   cursor: pointer;
   line-height: 3em;
