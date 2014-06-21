@@ -39,9 +39,19 @@ p, ol {line-height: 24px;}
 .loading .content { display: none; }
 .loading-indicator { display: none; }
 .loading .loading-indicator { display: block; }
-label { display: block; cursor: pointer; line-height: 3em }
+label {
+  display: inline-block;
+  cursor: pointer;
+  line-height: 3em;
+  width: 49%;
+  box-sizing: border-box;
+  min-width: 290px;
+}
+
 label:hover, label:focus { background-color: yellow; }
-.rank { display: inline-block; margin: 0 .3em; width: 1em; }
+.rank { display: inline-block; margin: 0 .3em; width: 1em; padding: 0 0.25em; text-align: center; }
 textarea { font-size: 1.2em; line-height: 1.5em; width: 100%; min-height: 3em; box-sizing: border-box; }
 .note { color: #999; }
+input:checked + span { background-color: yellow; }
+
 
