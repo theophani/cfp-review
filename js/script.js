@@ -28,7 +28,10 @@
   }
   // ---
 
-  var sheetID = "ENTER THE SHEET ID HERE";
+  var sheetUrl = prompt("Enter Google Spreadsheet URL",
+      localStorage.getItem('sheetUrl') || '');
+  localStorage.setItem('sheetUrl', sheetUrl);
+  var sheetID = sheetUrl.match(/key=([^&]+)/)[1];
   var spreadsheetLink = "https://docs.google.com/a/github.com/spreadsheet/ccc?key=" + sheetID;
 
   // restore previous votes into the current vote form
@@ -59,6 +62,11 @@
     }
     $('body').css({ opacity: 0.5 });
     setTimeout(successCallback, 150);
+    exportData(e);
+    if (document.querySelector('#speed_mode').checked) {
+      document.querySelector('.pagination-next-fullTable').click();
+      window.scrollTo(0,0);
+    }
   }
 
   var totalRows; // ugh global!
