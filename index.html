@@ -6,9 +6,9 @@
     <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
     <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js'></script>
     <link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic'>
-    <script type='text/javascript' src='../js/tabletop1.3.4.js'></script>
-    <script type='text/javascript' src='../js/sheetsee.js'></script>
-    <link rel='stylesheet' type='text/css' href='../assets/style.css'>
+    <script type='text/javascript' src='./js/tabletop1.3.4.js'></script>
+    <script type='text/javascript' src='./js/sheetsee.js'></script>
+    <link rel='stylesheet' type='text/css' href='./assets/style.css'>
   </head>
 <body class="loading">
   <div class="container content">
@@ -18,6 +18,7 @@
       <em><a id="spreadsheet-link" href="" target="_blank">Speadsheet with complete entries</a></em>
       <em><a id="export-link" href="">Export</a></em>
     </p>
+    <p><input type="checkbox" id="speed_mode"> Speed mode (Next on vote)</p>
     <textarea rows="20" cols="20" style="display:none;" id="export"></textarea>
     </div>
   </div>
@@ -62,10 +63,11 @@
     </form>
     </div>
     <p class="note"><span>(Row {{sheetRowNumber}} in sheet)</span></p>
+
   {{/rows}}
   </div>
 </script>
 
-<script type='text/javascript' src='../js/script.js'></script>
+<script type='text/javascript' src='./js/script.js'></script>
 </body>
 </html>
