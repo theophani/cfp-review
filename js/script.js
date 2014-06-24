@@ -47,25 +47,28 @@
     $('#vote_' + vote.vote).prop("checked", true);
   }
 
-  function persistVote (e) {
-    var vote = parseVote(($('#voter').serialize()));
-    var votes = loadVotes();
+  function persistVote (advance) {
+    return function (e) {
+      var vote = parseVote(($('#voter').serialize()));
+      var votes = loadVotes();
 
-    votes[vote.sheetRowNumber] = {
-      vote: vote.vote,
-      comment: vote.comment
-    };
-    storeVotes(votes);
+      votes[vote.sheetRowNumber] = {
+        vote: vote.vote,
+        comment: vote.comment
+      };
+      storeVotes(votes);
 
-    function successCallback () {
-      $('body').css({ opacity: 1 });
-    }
-    $('body').css({ opacity: 0.5 });
-    setTimeout(successCallback, 150);
-    exportData(e);
-    if (document.querySelector('#speed_mode').checked) {
-      document.querySelector('.pagination-next-fullTable').click();
-      window.scrollTo(0,0);
+      function successCallback () {
+        $('body').css({ opacity: 1 });
+        if (advance && document.querySelector('#speed_mode').checked) {
+          document.querySelector('.pagination-next-fullTable').click();
+          window.scrollTo(0,0);
+        }
+      }
+
+      $('body').css({ opacity: 0.5 });
+      exportData(e);
+      setTimeout(successCallback, 150);
     }
   }
 
@@ -122,8 +125,8 @@
     return vote;
   }
 
-  $('.content').on('change', 'form input', persistVote);
-  $('.content').on('blur', 'form textarea', persistVote)
+  $('.content').on('change', 'form input', persistVote(true));
+  $('.content').on('blur', 'form textarea', persistVote(false))
   $('#export-link').on('click', exportData);
   $(window).on('hashchange', loadValues);
 }());
