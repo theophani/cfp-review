@@ -125,6 +125,19 @@
     return vote;
   }
 
+  function selectVote (e) {
+    if (e.target.tagName === "textarea") { return; }
+    var value = e.keyCode - 48;
+    if (e.keyCode === 88) {
+      $("#vote_10").attr('checked', 'checked')[0].blur();
+      persistVote(true)(e);
+    } else if (value > 0 && value < 10) {
+      $("#vote_"+value).attr('checked', 'checked')[0].blur();
+      persistVote(true)(e);
+    }
+  }
+
+  $(document).on('keyup', selectVote);
   $('.content').on('change', 'form input', persistVote(true));
   $('.content').on('blur', 'form textarea', persistVote(false))
   $('#export-link').on('click', exportData);
